@@ -5,7 +5,7 @@ Just another library to validate classes
 
 Note: The Jal.Locator.CastleWindsor, Jal.Factory and Jal.AssemblyFinder library are needed.
 
-### Setup the Jal.AssemblyFinder library
+*Setup the Jal.AssemblyFinder library*
 
 	var directory = AppDomain.CurrentDomain.BaseDirectory;
 	AssemblyFinder.Impl.AssemblyFinder.Current = new AssemblyFinder.Impl.AssemblyFinder(directory);
