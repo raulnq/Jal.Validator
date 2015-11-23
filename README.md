@@ -3,30 +3,30 @@ Just another library to validate classes
 
 ## How to use?
 
-Note: The Jal.Locator.CastleWindsor, Jal.Factory and Jal.AssemblyFinder library are needed.
+*Note: The Jal.Locator.CastleWindsor, Jal.Factory and Jal.AssemblyFinder library are needed*
 
-*Setup the Jal.AssemblyFinder library*
+**Setup the Jal.AssemblyFinder library**
 
 	var directory = AppDomain.CurrentDomain.BaseDirectory;
 	AssemblyFinder.Impl.AssemblyFinder.Current = new AssemblyFinder.Impl.AssemblyFinder(directory);
 	
-### Setup the Castle Windsor container
+**Setup the Castle Windsor container**
 
 	var container = new WindsorContainer();
 
-### Install the Jal.Locator.CastleWindsor library
+**Install the Jal.Locator.CastleWindsor library**
 
 	container.Install(new ServiceLocatorInstaller());
 
-### Install the Jal.Factory library
+**Install the Jal.Factory library**
 
 	container.Install(new FactoryInstaller());
 	
-### Install the Jal.Validator library, use the ValidatorInstaller class included
+**Install the Jal.Validator library, use the ValidatorInstaller class included**
 
 	container.Install(new ValidatorInstaller());
 
-### Create your validator class
+**Create your validator class**
 
 	public class CustomerValidator : AbstractValidator<Customer>
     {
@@ -48,7 +48,7 @@ Note: The Jal.Locator.CastleWindsor, Jal.Factory and Jal.AssemblyFinder library 
         }
     }
 
-### Create a class to setup the Jal.Validator library 
+**Create a class to setup the Jal.Validator library**
 
     public class ValidationConfigurationSource : AbstractValidationConfigurationSource
     {
@@ -58,19 +58,19 @@ Note: The Jal.Locator.CastleWindsor, Jal.Factory and Jal.AssemblyFinder library 
         }
     }
 	
-### Tag the assembly container of the validator classes in order to be read by the library
+**Tag the assembly container of the validator classes in order to be read by the library**
 
 	[assembly: AssemblyTag("Validator")]
 
-### Tag the assembly container of the validator configuration source classes in order to be read by the library
+**Tag the assembly container of the validator configuration source classes in order to be read by the library**
 
 	[assembly: AssemblyTag("ValidatorSource")]
 	
-### Resolve a instance of the interface IModelValidator
+**Resolve a instance of the interface IModelValidator**
 
 	var modelValidator = container.Resolve<IModelValidator>();
 
-### Use the Validator class
+**Use the Validator class**
 
 	 var customer = new Customer
             {
@@ -81,7 +81,15 @@ Note: The Jal.Locator.CastleWindsor, Jal.Factory and Jal.AssemblyFinder library 
 	
 ## FluentValidation Integration
 
-Note: The Jal.Validator.FluentValidation library is needed.
+*Note: The Jal.Validator.FluentValidation library is needed*
 
-### Create your validator class inheriting from the following class: Jal.Validator.FluentValidation.AbstractValidator
+**Create your validator class inheriting from the following class: Jal.Validator.FluentValidation.AbstractValidator**
+
+    public class CustomerValidator : Jal.Validator.FluentValidation.AbstractValidator<Customer>
+    {
+        public MandatoryFieldsValidator()
+        {
+            RuleFor(customer => customer.Name).NotNull();
+        }
+    }
 
