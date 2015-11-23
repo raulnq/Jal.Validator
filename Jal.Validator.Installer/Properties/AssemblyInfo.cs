@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Jal.Validator.Installer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Castle Windsor installer for the Jal.Validator library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Hewlett-Packard Company")]
+[assembly: AssemblyCompany("Raul Naupari")]
 [assembly: AssemblyProduct("Jal.Validator.Installer")]
-[assembly: AssemblyCopyright("Copyright © Hewlett-Packard Company 2015")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

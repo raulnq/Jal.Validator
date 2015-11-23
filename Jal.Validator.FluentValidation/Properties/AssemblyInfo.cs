@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Jal.Validator.FluentValidation")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Integration between FluentValidation and Jal.Conveter library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Hewlett-Packard Company")]
-[assembly: AssemblyProduct("Jal.Validator.FluentValidation")]
-[assembly: AssemblyCopyright("Copyright © Hewlett-Packard Company 2015")]
+[assembly: AssemblyCompany("Raul Naupari")]
+[assembly: AssemblyProduct("JJal.Validator.FluentValidation")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
