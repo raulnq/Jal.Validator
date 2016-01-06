@@ -41,11 +41,14 @@ namespace Jal.Validator.Installer
                 container.Register(Component.For(typeof(IModelValidator)).ImplementedBy(typeof(ModelValidator)).LifestyleSingleton());
             }
 
-            var assemblysource = AssemblyFinder.Impl.AssemblyFinder.Current.GetAssembly("ValidatorSource");
-            if (assemblysource != null)
+            var assembliessource = AssemblyFinder.Impl.AssemblyFinder.Current.GetAssemblies("ValidatorSource");
+            if (assembliessource != null)
             {
-                var assemblyDescriptor = Classes.FromAssembly(assemblysource);
-                container.Register(assemblyDescriptor.BasedOn<AbstractValidationConfigurationSource>().WithServiceAllInterfaces());
+                foreach (var assembly in assembliessource)
+                {
+                    var assemblyDescriptor = Classes.FromAssembly(assembly);
+                    container.Register(assemblyDescriptor.BasedOn<AbstractValidationConfigurationSource>().WithServiceAllInterfaces());
+                }
             }
         }
     }
