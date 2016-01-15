@@ -13,6 +13,7 @@ Just another library to validate classes
 **Setup the Castle Windsor container**
 
 	var container = new WindsorContainer();
+	container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel));
 
 **Install the Jal.Locator.CastleWindsor library**
 
