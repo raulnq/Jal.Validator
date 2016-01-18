@@ -8,9 +8,9 @@ namespace Jal.Validator.Interface
 
         ValidationResult Validate(TTarget instance, dynamic context);
 
-        ValidationResult Validate(TTarget instance, string ruleSet);
+        ValidationResult Validate(TTarget instance, string subgroup);
 
-        ValidationResult Validate(TTarget instance, string ruleSet, dynamic context);
+        ValidationResult Validate(TTarget instance, string subgroup, dynamic context);
     }
 
     public interface IValidator

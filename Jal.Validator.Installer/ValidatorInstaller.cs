@@ -18,7 +18,7 @@ namespace Jal.Validator.Installer
             {
                 foreach (var assembly in assemblies)
                 {
-                    var types = (assembly.GetTypes().Where(type => typeof(IValidatorContextContainer).IsAssignableFrom(type) && typeof(IValidator).IsAssignableFrom(type)));
+                    var types = (assembly.GetTypes().Where(type => typeof(ITransientValidator).IsAssignableFrom(type) && typeof(IValidator).IsAssignableFrom(type)));
                     foreach (var t in types)
                     {
                         var service = t.GetInterfaces().FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition()==typeof(IValidator<>));
@@ -28,7 +28,7 @@ namespace Jal.Validator.Installer
                         }
                     }
 
-                    types = (assembly.GetTypes().Where(type => !typeof(IValidatorContextContainer).IsAssignableFrom(type) && typeof(IValidator).IsAssignableFrom(type)));
+                    types = (assembly.GetTypes().Where(type => !typeof(ITransientValidator).IsAssignableFrom(type) && typeof(IValidator).IsAssignableFrom(type)));
                     foreach (var t in types)
                     {
                         var service = t.GetInterfaces().FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IValidator<>));

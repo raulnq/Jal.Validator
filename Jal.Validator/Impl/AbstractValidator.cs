@@ -15,12 +15,12 @@ namespace Jal.Validator.Impl
             return Validate(instance);
         }
 
-        public virtual ValidationResult Validate(TTarget instance, string ruleSet)
+        public virtual ValidationResult Validate(TTarget instance, string subgroup)
         {
             return Validate(instance);
         }
 
-        public virtual ValidationResult Validate(TTarget instance, string ruleSet, dynamic context)
+        public virtual ValidationResult Validate(TTarget instance, string subgroup, dynamic context)
         {
             return Validate(instance, context);
         }

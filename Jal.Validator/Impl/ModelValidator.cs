@@ -14,17 +14,17 @@ namespace Jal.Validator.Impl
             ObjectFactory=objectFactory;
         }
 
-        private IValidator<T>[] Create<T>(T instance, string rulename)
+        private IValidator<T>[] Create<T>(T instance, string @group)
         {
             IValidator<T>[] validators;
 
-            if (string.IsNullOrWhiteSpace(rulename))
+            if (string.IsNullOrWhiteSpace(@group))
             {
                 validators = ObjectFactory.Create<T, IValidator<T>>(instance);
             }
             else
             {
-                validators = ObjectFactory.Create<T, IValidator<T>>(instance, rulename);
+                validators = ObjectFactory.Create<T, IValidator<T>>(instance, @group);
             }
 
             if (validators != null)
@@ -33,13 +33,13 @@ namespace Jal.Validator.Impl
             }
             else
             {
-                throw new ArgumentNullException(string.Format("It's not posible to get a validator instance of the rule {0}", rulename));
+                throw new ArgumentNullException(string.Format("It's not posible to get a validator instance of the rule {0}", @group));
             }
         }
 
-        private ValidationResult Validate<T>(T instance, string rulename, Func<IValidator<T>, ValidationResult> validate)
+        private ValidationResult Validate<T>(T instance, string @group, Func<IValidator<T>, ValidationResult> validate)
         {
-            var validators = Create(instance, rulename);
+            var validators = Create(instance, @group);
 
             foreach (var validator in validators)
             {
@@ -66,17 +66,21 @@ namespace Jal.Validator.Impl
             return Validate(instance, string.Empty, context);
         }
 
-        public ValidationResult Validate<T>(T instance, string rulename , dynamic context)
+        public ValidationResult Validate<T>(T instance, string @group , dynamic context)
         {
-            var validators = Create(instance, rulename);
+            var validators = Create(instance, @group);
 
             foreach (var validator in validators)
             {
-                var contextValidator = validator as IValidatorContextContainer;
+                var contextValidator = validator as ITransientValidator;
 
                 if (contextValidator != null)
                 {
                     contextValidator.Context = context;
+
+                    contextValidator.Group = @group;
+
+                    contextValidator.Subgroup = string.Empty;
                 }
 
                 var result = validator.Validate(instance, context);
@@ -90,20 +94,24 @@ namespace Jal.Validator.Impl
             return new ValidationResult();
         }
 
-        public ValidationResult Validate<T>(T instance, string rulename, string ruleset, dynamic context)
+        public ValidationResult Validate<T>(T instance, string @group, string subgroup, dynamic context)
         {
-            var validators = Create(instance, rulename);
+            var validators = Create(instance, @group);
 
             foreach (var validator in validators)
             {
-                var contextValidator = validator as IValidatorContextContainer;
+                var contextValidator = validator as ITransientValidator;
 
                 if (contextValidator != null)
                 {
                     contextValidator.Context = context;
+
+                    contextValidator.Group = @group;
+
+                    contextValidator.Subgroup = subgroup;
                 }
 
-                var result = validator.Validate(instance, ruleset, context);
+                var result = validator.Validate(instance, subgroup, context);
 
                 if (!result.IsValid)
                 {
@@ -114,14 +122,14 @@ namespace Jal.Validator.Impl
             return new ValidationResult();
         }
 
-        public ValidationResult Validate<T>(T instance, string rulename)
+        public ValidationResult Validate<T>(T instance, string @group)
         {
-            return Validate(instance, rulename, x => x.Validate(instance));
+            return Validate(instance, @group, x => x.Validate(instance));
         }
 
-        public ValidationResult Validate<T>(T instance, string rulename, string ruleset)
+        public ValidationResult Validate<T>(T instance, string @group, string subgroup)
         {
-            return Validate(instance, rulename, x => x.Validate(instance, ruleset));
+            return Validate(instance, @group, x => x.Validate(instance, subgroup));
         }
 
         #endregion

@@ -8,6 +8,11 @@ namespace Jal.Validator.Tests.Impl
         public ValidationConfigurationSource()
         {
             Validate<Customer>().With<CustomerValidator>();
+            Validate<Customer>("Group", x =>
+                                       {
+                                           x.With<CustomerValidator>();
+                                           x.With<CustomerValidator>();
+                                       });
         }
     }
 }

@@ -11,9 +11,9 @@ namespace Jal.Validator.FluentValidation
             return ValidateInstance(instance, string.Empty);
         }
 
-        ValidationResult Interface.IValidator<TTarget>.Validate(TTarget instance, string ruleSet)
+        ValidationResult Interface.IValidator<TTarget>.Validate(TTarget instance, string subgroup)
         {
-            return ValidateInstance(instance, ruleSet);
+            return ValidateInstance(instance, subgroup);
         }
    
         ValidationResult Interface.IValidator<TTarget>.Validate(TTarget instance, dynamic context)
@@ -21,9 +21,9 @@ namespace Jal.Validator.FluentValidation
             return ValidateInstance(instance, string.Empty);
         }
 
-        ValidationResult Interface.IValidator<TTarget>.Validate(TTarget instance, string ruleSet, dynamic context)
+        ValidationResult Interface.IValidator<TTarget>.Validate(TTarget instance, string subgroup, dynamic context)
         {
-            return ValidateInstance(instance, ruleSet);
+            return ValidateInstance(instance, subgroup);
         }
 
         ValidationResult ValidateInstance(TTarget instance, string ruleSet)

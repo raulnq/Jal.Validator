@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Jal.Factory.Fluent;
 using Jal.Factory.Interface;
 using Jal.Factory.Model;
+using Jal.Validator.Fluent;
 using Jal.Validator.Model;
 
 namespace Jal.Validator.Impl
@@ -21,15 +24,22 @@ namespace Jal.Validator.Impl
             return result;
         }
 
-        public ValidationRuleDescriptor<T> Validate<T>()
+        public ValidationRuleDescriptor<TTarget> Validate<TTarget>()
         {
-            var value = new ObjectFactoryConfigurationItem(typeof(T));
+            var value = new ObjectFactoryConfigurationItem(typeof(TTarget));
 
-            var descriptor = new ValidationRuleDescriptor<T>(value);
+            var descriptor = new ValidationRuleDescriptor<TTarget>(value);
             
             _objectFactoryConfigurationItems.Add(value);
 
             return descriptor;
+        }
+
+        public void Validate<TTarget>(string name, Action<ValidationRuleGroupDescriptor<TTarget>> action)
+        {
+            var descriptor = new ValidationRuleGroupDescriptor<TTarget>(_objectFactoryConfigurationItems, name);
+
+            action(descriptor);
         }
     }     
 }

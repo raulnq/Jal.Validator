@@ -69,7 +69,7 @@ namespace Jal.Validator.Tests.Integration
                 Name = name,
                 Age = age
             };
-            var validationResult = _modelValidator.Validate(customer, "RuleName");
+            var validationResult = _modelValidator.Validate(customer, "Group");
             Assert.AreEqual(true, validationResult.IsValid);
         }
     }

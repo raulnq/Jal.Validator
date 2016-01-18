@@ -23,17 +23,17 @@ namespace Jal.Validator.Tests.Impl
             return result;
         }
 
-        public override ValidationResult Validate(Customer instance, string ruleSet)
+        public override ValidationResult Validate(Customer instance, string subgroup)
         {
             var result = new ValidationResult();
-            if (ruleSet == "GreaterThan21")
+            if (subgroup == "GreaterThan21")
             {
                 if (instance.Age < 21)
                 {
                     result.Errors.Add(new ValidationFailure("Age", "The Age should be greater than 21", "1"));
                 }
             }
-            if (ruleSet == "LessThan10")
+            if (subgroup == "LessThan10")
             {
                 if (instance.Age > 10)
                 {

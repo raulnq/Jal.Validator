@@ -37,10 +37,10 @@
       <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Jal.AssemblyFinder">
-      <HintPath>..\packages\Jal.AssemblyFinder.1.0.0.1\lib\net40\Jal.AssemblyFinder.dll</HintPath>
+      <HintPath>..\packages\Jal.AssemblyFinder.1.1.0.0\lib\net40\Jal.AssemblyFinder.dll</HintPath>
     </Reference>
     <Reference Include="Jal.Factory">
-      <HintPath>..\packages\Jal.Factory.1.0.0.1\lib\net40\Jal.Factory.dll</HintPath>
+      <HintPath>..\packages\Jal.Factory.1.0.1.0\lib\net40\Jal.Factory.dll</HintPath>
     </Reference>
     <Reference Include="Jal.Locator">
       <HintPath>..\packages\Jal.Locator.1.0.0.0\lib\net40\Jal.Locator.dll</HintPath>

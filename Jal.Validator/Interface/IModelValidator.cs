@@ -6,14 +6,14 @@ namespace Jal.Validator.Interface
     {
         ValidationResult Validate<T>(T instance);
 
-        ValidationResult Validate<T>(T instance, string rulename);
+        ValidationResult Validate<T>(T instance, string @group);
 
-        ValidationResult Validate<T>(T instance, string rulename, string ruleset);
+        ValidationResult Validate<T>(T instance, string @group, string subgroup);
 
         ValidationResult Validate<T>(T instance, dynamic context);
 
-        ValidationResult Validate<T>(T instance, string rulename, dynamic context);
+        ValidationResult Validate<T>(T instance, string @group, dynamic context);
 
-        ValidationResult Validate<T>(T instance, string rulename, string ruleset, dynamic context);
+        ValidationResult Validate<T>(T instance, string @group, string subgroup, dynamic context);
     }
 }

@@ -18,7 +18,7 @@ namespace Jal.Validator.Tests.Attribute
            
             var validator = Fixture.Create<Mock<IValidator<Customer>>>();
 
-            validator.As<IValidatorContextContainer>();
+            validator.As<ITransientValidator>();
 
             if (!valid)
             {
