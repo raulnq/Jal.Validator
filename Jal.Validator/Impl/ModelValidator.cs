@@ -1,5 +1,6 @@
 ﻿using System;
 using Jal.Factory.Interface;
+using Jal.Validator.Fluent;
 using Jal.Validator.Interface;
 using Jal.Validator.Model;
 
@@ -12,6 +13,16 @@ namespace Jal.Validator.Impl
         public ModelValidator(IObjectFactory objectFactory)
         {
             ObjectFactory=objectFactory;
+        }
+
+        public static IModelValidator Current;
+
+        public static IModelValidatorObjectFactorySetupDescriptor Setup
+        {
+            get
+            {
+                return new ModelValidatorSetupDescriptor();
+            }
         }
 
         private IValidator<T>[] Create<T>(T instance, string @group)
@@ -72,16 +83,16 @@ namespace Jal.Validator.Impl
 
             foreach (var validator in validators)
             {
-                var contextValidator = validator as ITransientValidator;
+                //var contextValidator = validator as ITransientValidator;
 
-                if (contextValidator != null)
-                {
-                    contextValidator.Context = context;
+                //if (contextValidator != null)
+                //{
+                //    contextValidator.Context = context;
 
-                    contextValidator.Group = @group;
+                //    contextValidator.Group = @group;
 
-                    contextValidator.Subgroup = string.Empty;
-                }
+                //    contextValidator.Subgroup = string.Empty;
+                //}
 
                 var result = validator.Validate(instance, context);
 
@@ -100,16 +111,16 @@ namespace Jal.Validator.Impl
 
             foreach (var validator in validators)
             {
-                var contextValidator = validator as ITransientValidator;
+                //var contextValidator = validator as ITransientValidator;
 
-                if (contextValidator != null)
-                {
-                    contextValidator.Context = context;
+                //if (contextValidator != null)
+                //{
+                //    contextValidator.Context = context;
 
-                    contextValidator.Group = @group;
+                //    contextValidator.Group = @group;
 
-                    contextValidator.Subgroup = subgroup;
-                }
+                //    contextValidator.Subgroup = subgroup;
+                //}
 
                 var result = validator.Validate(instance, subgroup, context);
 

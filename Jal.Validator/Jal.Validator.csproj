@@ -30,12 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Jal.Factory, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Jal.Factory.1.0.1.0\lib\net40\Jal.Factory.dll</HintPath>
+    <Reference Include="Jal.Factory">
+      <HintPath>..\packages\Jal.Factory.1.0.3.0\lib\net40\Jal.Factory.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Jal.Locator">
-      <HintPath>..\packages\Jal.Locator.1.0.0.0\lib\net40\Jal.Locator.dll</HintPath>
+    <Reference Include="Jal.Locator, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Jal.Locator.1.0.3.0\lib\net40\Jal.Locator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,16 +47,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\IsSingleton.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Extension\ValidatorExtension.cs" />
-    <Compile Include="Impl\AbstractTransientValidator.cs" />
+    <Compile Include="Interface\IModelValidatorObjectFactorySetupDescriptor.cs" />
+    <Compile Include="Interface\IModelValidatorSetupDescriptor.cs" />
     <Compile Include="Impl\AbstractValidationConfigurationSource.cs" />
     <Compile Include="Impl\AbstractValidator.cs" />
     <Compile Include="Impl\ModelValidator.cs" />
     <Compile Include="Fluent\ValidationRuleGroupDescriptor.cs" />
+    <Compile Include="Fluent\ModelValidatorSetupDescriptor.cs" />
     <Compile Include="Interface\IModelValidator.cs" />
     <Compile Include="Interface\IValidator.cs" />
-    <Compile Include="Interface\ITransientValidator.cs" />
     <Compile Include="Model\ValidationException.cs" />
     <Compile Include="Model\ValidationFailure.cs" />
     <Compile Include="Model\ValidationResult.cs" />

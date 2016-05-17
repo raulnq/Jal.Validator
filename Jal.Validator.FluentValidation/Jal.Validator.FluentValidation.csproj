@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractTransientValidator.cs" />
     <Compile Include="AbstractValidator.cs" />
     <Compile Include="FluentAbstractValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
