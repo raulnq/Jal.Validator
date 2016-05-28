@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Jal.Factory">
-      <HintPath>..\packages\Jal.Factory.1.0.6.0\lib\net40\Jal.Factory.dll</HintPath>
+    <Reference Include="Jal.Factory, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Jal.Factory.1.0.7.0\lib\net40\Jal.Factory.dll</HintPath>
     </Reference>
     <Reference Include="Jal.Locator, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -46,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\IsSingleton.cs" />
+    <Compile Include="Attributes\IsTransientAttribute.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Extension\ValidatorExtension.cs" />
     <Compile Include="Impl\ValidatorFactory.cs" />

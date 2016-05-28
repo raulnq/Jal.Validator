@@ -46,19 +46,15 @@ namespace Jal.Validator.Tests.Attribute
             }
 
 
-            var factory = Fixture.Freeze<Mock<IObjectFactory>>();
+            var factory = Fixture.Freeze<Mock<IValidatorFactory>>();
 
             if (!empty)
             {
-                factory.Setup(x => x.Create<Customer, IValidator<Customer>>(It.IsAny<Customer>())).Returns(new[] { validator.Object });
-
-                factory.Setup(x => x.Create<Customer, IValidator<Customer>>(It.IsAny<Customer>(), It.IsAny<string>())).Returns(new[] { validator.Object });
+                factory.Setup(x => x.Create<Customer>(It.IsAny<Customer>(), It.IsAny<string>())).Returns(new[] { validator.Object });
             }
             else
             {
-                factory.Setup(x => x.Create<Customer, IValidator<Customer>>(It.IsAny<Customer>())).Returns(default(IValidator<Customer>[]));
-
-                factory.Setup(x => x.Create<Customer, IValidator<Customer>>(It.IsAny<Customer>(), It.IsAny<string>())).Returns(default(IValidator<Customer>[]));
+                factory.Setup(x => x.Create<Customer>(It.IsAny<Customer>(), It.IsAny<string>())).Returns(default(IValidator<Customer>[]));
             }
 
 
