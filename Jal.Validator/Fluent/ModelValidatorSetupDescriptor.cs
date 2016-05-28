@@ -1,23 +1,24 @@
 ﻿using System;
-using Jal.Factory.Interface;
 using Jal.Validator.Impl;
 using Jal.Validator.Interface;
 
 namespace Jal.Validator.Fluent
 {
-    public class ModelValidatorSetupDescriptor : IModelValidatorSetupDescriptor, IModelValidatorObjectFactorySetupDescriptor
+    public class ModelValidatorSetupDescriptor : IModelValidatorSetupDescriptor, IValidatorFactorySetupDescriptor
     {
-        private IObjectFactory _objectFactory;
+        private IValidatorFactory _validatorFactory;
 
         private IModelValidator _modelValidator;
 
-        public IModelValidatorSetupDescriptor UseObjectFactory(IObjectFactory objectFactory)
+        public IModelValidatorSetupDescriptor UseValidatorFactory(IValidatorFactory validatorFactory)
         {
-            if (objectFactory == null)
+            if (validatorFactory == null)
             {
-                throw new ArgumentNullException("objectFactory");
+                throw new ArgumentNullException("validatorFactory");
             }
-            _objectFactory = objectFactory;
+
+            _validatorFactory = validatorFactory;
+
             return this;
         }
 
@@ -35,7 +36,7 @@ namespace Jal.Validator.Fluent
             }
             else
             {
-                return new ModelValidator(_objectFactory);
+                return new ModelValidator(_validatorFactory);
             }
         }
     }

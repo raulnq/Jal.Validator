@@ -44,6 +44,7 @@ namespace Jal.Validator.Installer
                     }
                 }
                 container.Register(Component.For(typeof(IModelValidator)).ImplementedBy(typeof(ModelValidator)).LifestyleSingleton());
+                container.Register(Component.For(typeof(IValidatorFactory)).ImplementedBy(typeof(ValidatorFactory)).LifestyleSingleton());
             }
 
             var assembliessource = AssemblyFinder.Impl.AssemblyFinder.Current.GetAssemblies("ValidatorSource");

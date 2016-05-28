@@ -1,5 +1,4 @@
 ﻿using System;
-using Jal.Factory.Interface;
 using Jal.Validator.Fluent;
 using Jal.Validator.Interface;
 using Jal.Validator.Model;
@@ -8,16 +7,14 @@ namespace Jal.Validator.Impl
 {
     public class ModelValidator : IModelValidator
     {
-        protected readonly IObjectFactory ObjectFactory;
-
-        public ModelValidator(IObjectFactory objectFactory)
+        public ModelValidator(IValidatorFactory validatorFactory)
         {
-            ObjectFactory=objectFactory;
+            Factory = validatorFactory;
         }
 
         public static IModelValidator Current;
 
-        public static IModelValidatorObjectFactorySetupDescriptor Setup
+        public static IValidatorFactorySetupDescriptor Setup
         {
             get
             {
@@ -25,32 +22,9 @@ namespace Jal.Validator.Impl
             }
         }
 
-        private IValidator<T>[] Create<T>(T instance, string @group)
+        private ValidationResult Validate<T>(T instance, string validationgroup, Func<IValidator<T>, ValidationResult> validate)
         {
-            IValidator<T>[] validators;
-
-            if (string.IsNullOrWhiteSpace(@group))
-            {
-                validators = ObjectFactory.Create<T, IValidator<T>>(instance);
-            }
-            else
-            {
-                validators = ObjectFactory.Create<T, IValidator<T>>(instance, @group);
-            }
-
-            if (validators != null)
-            {
-                return validators;
-            }
-            else
-            {
-                throw new ArgumentNullException(string.Format("It's not posible to get a validator instance of the rule {0}", @group));
-            }
-        }
-
-        private ValidationResult Validate<T>(T instance, string @group, Func<IValidator<T>, ValidationResult> validate)
-        {
-            var validators = Create(instance, @group);
+            var validators = Factory.Create(instance, validationgroup);
 
             foreach (var validator in validators)
             {
@@ -77,23 +51,12 @@ namespace Jal.Validator.Impl
             return Validate(instance, string.Empty, context);
         }
 
-        public ValidationResult Validate<T>(T instance, string @group , dynamic context)
+        public ValidationResult Validate<T>(T instance, string validationgroup , dynamic context)
         {
-            var validators = Create(instance, @group);
+            var validators = Factory.Create(instance, validationgroup);
 
             foreach (var validator in validators)
             {
-                //var contextValidator = validator as ITransientValidator;
-
-                //if (contextValidator != null)
-                //{
-                //    contextValidator.Context = context;
-
-                //    contextValidator.Group = @group;
-
-                //    contextValidator.Subgroup = string.Empty;
-                //}
-
                 var result = validator.Validate(instance, context);
 
                 if (!result.IsValid)
@@ -105,24 +68,13 @@ namespace Jal.Validator.Impl
             return new ValidationResult();
         }
 
-        public ValidationResult Validate<T>(T instance, string @group, string subgroup, dynamic context)
+        public ValidationResult Validate<T>(T instance, string validationgroup, string validationsubgroup, dynamic context)
         {
-            var validators = Create(instance, @group);
+            var validators = Factory.Create(instance, validationgroup);
 
             foreach (var validator in validators)
             {
-                //var contextValidator = validator as ITransientValidator;
-
-                //if (contextValidator != null)
-                //{
-                //    contextValidator.Context = context;
-
-                //    contextValidator.Group = @group;
-
-                //    contextValidator.Subgroup = subgroup;
-                //}
-
-                var result = validator.Validate(instance, subgroup, context);
+                var result = validator.Validate(instance, validationsubgroup, context);
 
                 if (!result.IsValid)
                 {
@@ -133,14 +85,16 @@ namespace Jal.Validator.Impl
             return new ValidationResult();
         }
 
-        public ValidationResult Validate<T>(T instance, string @group)
+        public IValidatorFactory Factory { get; set; }
+
+        public ValidationResult Validate<T>(T instance, string validationgroup)
         {
-            return Validate(instance, @group, x => x.Validate(instance));
+            return Validate(instance, validationgroup, x => x.Validate(instance));
         }
 
-        public ValidationResult Validate<T>(T instance, string @group, string subgroup)
+        public ValidationResult Validate<T>(T instance, string validationgroup, string validationsubgroup)
         {
-            return Validate(instance, @group, x => x.Validate(instance, subgroup));
+            return Validate(instance, validationgroup, x => x.Validate(instance, validationsubgroup));
         }
 
         #endregion

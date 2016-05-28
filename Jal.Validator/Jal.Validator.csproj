@@ -31,8 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Jal.Factory">
-      <HintPath>..\packages\Jal.Factory.1.0.3.0\lib\net40\Jal.Factory.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Jal.Factory.1.0.6.0\lib\net40\Jal.Factory.dll</HintPath>
     </Reference>
     <Reference Include="Jal.Locator, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -50,7 +49,8 @@
     <Compile Include="Attributes\IsSingleton.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Extension\ValidatorExtension.cs" />
-    <Compile Include="Interface\IModelValidatorObjectFactorySetupDescriptor.cs" />
+    <Compile Include="Impl\ValidatorFactory.cs" />
+    <Compile Include="Interface\IValidatorFactorySetupDescriptor.cs" />
     <Compile Include="Interface\IModelValidatorSetupDescriptor.cs" />
     <Compile Include="Impl\AbstractValidationConfigurationSource.cs" />
     <Compile Include="Impl\AbstractValidator.cs" />
@@ -59,6 +59,7 @@
     <Compile Include="Fluent\ModelValidatorSetupDescriptor.cs" />
     <Compile Include="Interface\IModelValidator.cs" />
     <Compile Include="Interface\IValidator.cs" />
+    <Compile Include="Interface\IValidatorFactory.cs" />
     <Compile Include="Model\ValidationException.cs" />
     <Compile Include="Model\ValidationFailure.cs" />
     <Compile Include="Model\ValidationResult.cs" />
