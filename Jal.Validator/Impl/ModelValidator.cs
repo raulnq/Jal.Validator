@@ -1,20 +1,23 @@
 ﻿using System;
 using Jal.Validator.Fluent;
 using Jal.Validator.Interface;
+using Jal.Validator.Interface.Fluent;
 using Jal.Validator.Model;
 
 namespace Jal.Validator.Impl
 {
     public class ModelValidator : IModelValidator
     {
-        public ModelValidator(IValidatorFactory validatorFactory)
+        public ModelValidator(IValidatorFactory validatorFactory, IModelValidatorInterceptor modelValidatorInterceptor)
         {
             Factory = validatorFactory;
+
+            Interceptor = modelValidatorInterceptor;
         }
 
         public static IModelValidator Current;
 
-        public static IValidatorFactorySetupDescriptor Setup
+        public static IModelValidatorStartSetupDescriptor Setup
         {
             get
             {
@@ -22,79 +25,74 @@ namespace Jal.Validator.Impl
             }
         }
 
-        private ValidationResult Validate<T>(T instance, string validationgroup, Func<IValidator<T>, ValidationResult> validate)
+        public IModelValidatorInterceptor Interceptor { get; set; }
+
+        ValidationResult Try<T>(T instance,  Func<IValidator<T>[]> creation, Func<IValidator<T>, ValidationResult> validation)
         {
-            var validators = Factory.Create(instance, validationgroup);
-
-            foreach (var validator in validators)
+            Interceptor.OnEnter(instance);
+            try
             {
-                var result = validate(validator);
+                var validators = creation();
 
-                if (!result.IsValid)
+                foreach (var validator in validators)
                 {
-                    return result;
-                }
-            } 
+                    var result = validation(validator);
 
-            return new ValidationResult();
+                    if (!result.IsValid)
+                    {
+                        Interceptor.OnSuccess(instance, result);
+                        return result;
+                    }
+                } 
+               
+                return new ValidationResult();
+            }
+            catch (Exception ex)
+            {
+                Interceptor.OnError(instance, ex);
+                throw;
+            }
+            finally
+            {
+                Interceptor.OnExit(instance);
+            }
         }
 
         #region IModelValidator Members
 
         public ValidationResult Validate<T>(T instance)
         {
-            return Validate(instance, string.Empty);
+            return Try(instance, () => Factory.Create(instance, string.Empty), validator => validator.Validate(instance));
         }
 
         public ValidationResult Validate<T>(T instance, dynamic context)
         {
-            return Validate(instance, string.Empty, context);
+            return Try(instance, () => Factory.Create(instance, string.Empty), validator => validator.Validate(instance, context));
         }
 
         public ValidationResult Validate<T>(T instance, string validationgroup , dynamic context)
         {
-            var validators = Factory.Create(instance, validationgroup);
 
-            foreach (var validator in validators)
-            {
-                var result = validator.Validate(instance, context);
-
-                if (!result.IsValid)
-                {
-                    return result;
-                }
-            }
-
-            return new ValidationResult();
+            return Try(instance, () => Factory.Create(instance, validationgroup), validator => validator.Validate(instance, context));
+            
         }
 
         public ValidationResult Validate<T>(T instance, string validationgroup, string validationsubgroup, dynamic context)
         {
-            var validators = Factory.Create(instance, validationgroup);
-
-            foreach (var validator in validators)
-            {
-                var result = validator.Validate(instance, validationsubgroup, context);
-
-                if (!result.IsValid)
-                {
-                    return result;
-                }
-            }
-
-            return new ValidationResult();
+            return Try(instance, () => Factory.Create(instance, validationgroup), validator => validator.Validate(instance, validationsubgroup, context));
         }
 
         public IValidatorFactory Factory { get; set; }
 
         public ValidationResult Validate<T>(T instance, string validationgroup)
         {
-            return Validate(instance, validationgroup, x => x.Validate(instance));
+            return Try(instance, () => Factory.Create(instance, validationgroup), validator => validator.Validate(instance));
+
         }
 
         public ValidationResult Validate<T>(T instance, string validationgroup, string validationsubgroup)
         {
-            return Validate(instance, validationgroup, x => x.Validate(instance, validationsubgroup));
+            return Try(instance, () => Factory.Create(instance, validationgroup), validator => validator.Validate(instance, validationsubgroup));
         }
 
         #endregion

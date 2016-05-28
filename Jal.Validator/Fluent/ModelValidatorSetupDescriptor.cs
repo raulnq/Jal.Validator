@@ -1,16 +1,32 @@
 ﻿using System;
+using Jal.Factory.Impl;
+using Jal.Factory.Interface;
+using Jal.Locator.Interface;
 using Jal.Validator.Impl;
 using Jal.Validator.Interface;
+using Jal.Validator.Interface.Fluent;
 
 namespace Jal.Validator.Fluent
 {
-    public class ModelValidatorSetupDescriptor : IModelValidatorSetupDescriptor, IValidatorFactorySetupDescriptor
+    public class ModelValidatorSetupDescriptor : IModelValidatorSetupDescriptor, IModelValidatorStartSetupDescriptor
     {
         private IValidatorFactory _validatorFactory;
 
         private IModelValidator _modelValidator;
 
-        public IModelValidatorSetupDescriptor UseValidatorFactory(IValidatorFactory validatorFactory)
+        private IModelValidatorInterceptor _modelValidatorInterceptor;
+
+        public IModelValidatorSetupDescriptor UseObjectFactory(IObjectFactory objectFactory)
+        {
+            if (objectFactory == null)
+            {
+                throw new ArgumentNullException("objectFactory");
+            }
+            _validatorFactory = new ValidatorFactory(objectFactory);
+            return this;
+        }
+
+        public IModelValidatorSetupDescriptor UseFactory(IValidatorFactory validatorFactory)
         {
             if (validatorFactory == null)
             {
@@ -22,7 +38,7 @@ namespace Jal.Validator.Fluent
             return this;
         }
 
-        public IModelValidatorSetupDescriptor UseModelValidator(IModelValidator modelValidator)
+        public IModelValidatorEndSetupDescriptor UseModelValidator(IModelValidator modelValidator)
         {
             _modelValidator = modelValidator;
             return this;
@@ -36,8 +52,21 @@ namespace Jal.Validator.Fluent
             }
             else
             {
-                return new ModelValidator(_validatorFactory);
+                IModelValidatorInterceptor modelValidatorInterceptor = new NullModelValidatorInterceptor();
+
+                if (_modelValidatorInterceptor != null)
+                {
+                    modelValidatorInterceptor = _modelValidatorInterceptor;
+                }
+
+                return new ModelValidator(_validatorFactory, modelValidatorInterceptor);
             }
+        }
+
+        public IModelValidatorSetupDescriptor UseInterceptor(IModelValidatorInterceptor modelValidatorInterceptor)
+        {
+            _modelValidatorInterceptor = modelValidatorInterceptor;
+            return this;
         }
     }
 }

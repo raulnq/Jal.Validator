@@ -17,5 +17,7 @@ namespace Jal.Validator.Interface
         ValidationResult Validate<T>(T instance, string validationgroup, string validationsubgroup, dynamic context);
 
         IValidatorFactory Factory { get; }
+
+        IModelValidatorInterceptor Interceptor { get; }
     }
 }
