@@ -44,7 +44,6 @@ namespace Jal.Validator.Installer
                     }
                 }
                 container.Register(Component.For(typeof(IModelValidator)).ImplementedBy(typeof(ModelValidator)).LifestyleSingleton());
-                container.Register(Component.For(typeof(IModelValidatorInterceptor)).ImplementedBy(typeof(NullModelValidatorInterceptor)).LifestyleSingleton());
                 container.Register(Component.For(typeof(IValidatorFactory)).ImplementedBy(typeof(ValidatorFactory)).LifestyleSingleton());
             }
 

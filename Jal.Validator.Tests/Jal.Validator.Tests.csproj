@@ -39,20 +39,25 @@
     <Reference Include="FluentValidation">
       <HintPath>..\packages\FluentValidation.5.6.2.0\lib\portable-net40+sl50+wp80+win8+wpa81\FluentValidation.dll</HintPath>
     </Reference>
-    <Reference Include="Jal.AssemblyFinder">
-      <HintPath>..\packages\Jal.AssemblyFinder.1.0.0.1\lib\net40\Jal.AssemblyFinder.dll</HintPath>
+    <Reference Include="Jal.AssemblyFinder, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Jal.AssemblyFinder.1.1.0.0\lib\net40\Jal.AssemblyFinder.dll</HintPath>
     </Reference>
-    <Reference Include="Jal.Factory">
-      <HintPath>..\packages\Jal.Factory.1.0.0.1\lib\net40\Jal.Factory.dll</HintPath>
+    <Reference Include="Jal.Factory, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Jal.Factory.1.0.9.0\lib\net40\Jal.Factory.dll</HintPath>
     </Reference>
-    <Reference Include="Jal.Factory.Installer">
-      <HintPath>..\packages\Jal.Factory.Installer.1.0.0.1\lib\net40\Jal.Factory.Installer.dll</HintPath>
+    <Reference Include="Jal.Factory.Installer, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Jal.Factory.Installer.1.0.7.0\lib\net40\Jal.Factory.Installer.dll</HintPath>
     </Reference>
-    <Reference Include="Jal.Locator">
-      <HintPath>..\packages\Jal.Locator.1.0.0.0\lib\net40\Jal.Locator.dll</HintPath>
+    <Reference Include="Jal.Locator, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Jal.Locator.1.0.5.0\lib\net40\Jal.Locator.dll</HintPath>
     </Reference>
-    <Reference Include="Jal.Locator.CastleWindsor">
-      <HintPath>..\packages\Jal.Locator.CastleWindsor.1.0.0.0\lib\net40\Jal.Locator.CastleWindsor.dll</HintPath>
+    <Reference Include="Jal.Locator.CastleWindsor, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Jal.Locator.CastleWindsor.1.0.3.0\lib\net40\Jal.Locator.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>

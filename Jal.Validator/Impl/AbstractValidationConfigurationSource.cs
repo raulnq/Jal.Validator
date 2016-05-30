@@ -24,20 +24,20 @@ namespace Jal.Validator.Impl
             return result;
         }
 
-        public ValidationRuleDescriptor<TTarget> Validate<TTarget>()
+        public ValidationRuleFluentBuilder<TTarget> Validate<TTarget>()
         {
             var value = new ObjectFactoryConfigurationItem(typeof(TTarget));
 
-            var descriptor = new ValidationRuleDescriptor<TTarget>(value);
+            var descriptor = new ValidationRuleFluentBuilder<TTarget>(value);
             
             _objectFactoryConfigurationItems.Add(value);
 
             return descriptor;
         }
 
-        public void Validate<TTarget>(string name, Action<ValidationRuleGroupDescriptor<TTarget>> action)
+        public void Validate<TTarget>(string name, Action<ValidationRuleGroupFluentBuilder<TTarget>> action)
         {
-            var descriptor = new ValidationRuleGroupDescriptor<TTarget>(_objectFactoryConfigurationItems, name);
+            var descriptor = new ValidationRuleGroupFluentBuilder<TTarget>(_objectFactoryConfigurationItems, name);
 
             action(descriptor);
         }

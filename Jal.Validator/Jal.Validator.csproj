@@ -30,13 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Jal.Factory, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Jal.Factory, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Jal.Factory.1.0.7.0\lib\net40\Jal.Factory.dll</HintPath>
+      <HintPath>..\packages\Jal.Factory.1.0.9.0\lib\net40\Jal.Factory.dll</HintPath>
     </Reference>
-    <Reference Include="Jal.Locator, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Jal.Locator, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Jal.Locator.1.0.3.0\lib\net40\Jal.Locator.dll</HintPath>
+      <HintPath>..\packages\Jal.Locator.1.0.5.0\lib\net40\Jal.Locator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,16 +50,20 @@
     <Compile Include="Attributes\IsTransientAttribute.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Extension\ValidatorExtension.cs" />
+    <Compile Include="Interface\Fluent\IValidationRuleFluentBuilder.cs" />
+    <Compile Include="Interface\Fluent\IValidationRuleGroupFluentBuilder.cs" />
+    <Compile Include="Interface\Fluent\IValidationRuleWhenFluentBuilder.cs" />
+    <Compile Include="Impl\AbstractModelValidatorInterceptor.cs" />
     <Compile Include="Impl\NullModelValidatorInterceptor.cs" />
     <Compile Include="Impl\ValidatorFactory.cs" />
-    <Compile Include="Interface\Fluent\IModelValidatorEndSetupDescriptor.cs" />
-    <Compile Include="Interface\Fluent\IModelValidatorStartSetupDescriptor.cs" />
-    <Compile Include="Interface\Fluent\IModelValidatorSetupDescriptor.cs" />
+    <Compile Include="Interface\Fluent\IModelValidatorEndFluentBuilder.cs" />
+    <Compile Include="Interface\Fluent\IModelValidatorStartFluentBuilder.cs" />
+    <Compile Include="Interface\Fluent\IModelValidatorFluentBuilder.cs" />
     <Compile Include="Impl\AbstractValidationConfigurationSource.cs" />
     <Compile Include="Impl\AbstractValidator.cs" />
     <Compile Include="Impl\ModelValidator.cs" />
-    <Compile Include="Fluent\ValidationRuleGroupDescriptor.cs" />
-    <Compile Include="Fluent\ModelValidatorSetupDescriptor.cs" />
+    <Compile Include="Fluent\ValidationRuleGroupFluentBuilder.cs" />
+    <Compile Include="Fluent\ModelValidatorFluentBuilder.cs" />
     <Compile Include="Interface\IModelValidator.cs" />
     <Compile Include="Interface\IModelValidatorInterceptor.cs" />
     <Compile Include="Interface\IValidator.cs" />
@@ -67,8 +71,8 @@
     <Compile Include="Model\ValidationException.cs" />
     <Compile Include="Model\ValidationFailure.cs" />
     <Compile Include="Model\ValidationResult.cs" />
-    <Compile Include="Fluent\ValidationRuleDescriptor.cs" />
-    <Compile Include="Fluent\ValidationRuleWhenDescriptor.cs" />
+    <Compile Include="Fluent\ValidationRuleFluentBuilder.cs" />
+    <Compile Include="Fluent\ValidationRuleWhenFluentBuilder.cs" />
     <Compile Include="Model\ValidationSettings.cs" />
     <Compile Include="Model\ValidationWarning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

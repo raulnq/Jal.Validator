@@ -18,6 +18,6 @@ namespace Jal.Validator.Interface
 
         IValidatorFactory Factory { get; }
 
-        IModelValidatorInterceptor Interceptor { get; }
+        IModelValidatorInterceptor Interceptor { get; set; }
     }
 }

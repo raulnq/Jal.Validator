@@ -8,20 +8,20 @@ namespace Jal.Validator.Impl
 {
     public class ModelValidator : IModelValidator
     {
-        public ModelValidator(IValidatorFactory validatorFactory, IModelValidatorInterceptor modelValidatorInterceptor)
+        public ModelValidator(IValidatorFactory validatorFactory)
         {
             Factory = validatorFactory;
 
-            Interceptor = modelValidatorInterceptor;
+            Interceptor = AbstractModelValidatorInterceptor.Instance;
         }
 
         public static IModelValidator Current;
 
-        public static IModelValidatorStartSetupDescriptor Setup
+        public static IModelValidatorStartFluentBuilder Builder
         {
             get
             {
-                return new ModelValidatorSetupDescriptor();
+                return new ModelValidatorFluentBuilder();
             }
         }
 

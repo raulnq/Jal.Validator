@@ -1,9 +1,14 @@
 ﻿using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
+using Jal.Factory.Impl;
 using Jal.Factory.Installer;
+using Jal.Factory.Interface;
 using Jal.Locator.CastleWindsor.Installer;
+using Jal.Locator.Impl;
+using Jal.Validator.Impl;
 using Jal.Validator.Installer;
 using Jal.Validator.Interface;
+using Jal.Validator.Tests.Impl;
 using Jal.Validator.Tests.Model;
 using NUnit.Framework;
 
@@ -70,6 +75,30 @@ namespace Jal.Validator.Tests.Integration
                 Age = age
             };
             var validationResult = _modelValidator.Validate(customer, "Group");
+            Assert.AreEqual(true, validationResult.IsValid);
+        }
+
+        [Test]
+        [TestCase("Name", 19)]
+        [TestCase("A", 10000)]
+        [TestCase("_", 999)]
+        public void Validate_WithRuleName_IsValid1(string name, int age)
+        {
+            var locator = ServiceLocator.Builder.Create as ServiceLocator;
+
+            locator.Register(typeof(IValidator<Customer>), new CustomerValidator(), typeof(CustomerValidator).FullName);
+
+            var factory = ObjectFactory.Builder.UseServiceLocator(locator).UseConfigurationSource(new IObjectFactoryConfigurationSource[]{new ValidationConfigurationSource()}).Create;
+
+            var validator = ModelValidator.Builder.UseObjectFactory(factory).Create;
+
+            var customer = new Customer
+            {
+                Name = name,
+                Age = age
+            };
+            var validationResult = validator.Validate(customer, "Group");
+
             Assert.AreEqual(true, validationResult.IsValid);
         }
     }
