@@ -1,6 +1,7 @@
 using Jal.Factory.Interface;
+using Jal.Validator.Interface;
 
-namespace Jal.Validator.Interface.Fluent
+namespace Jal.Validator.Fluent.Interface
 {
     public interface IModelValidatorStartFluentBuilder
     {
@@ -8,6 +9,6 @@ namespace Jal.Validator.Interface.Fluent
 
         IModelValidatorEndFluentBuilder UseModelValidator(IModelValidator modelValidator);
 
-        IModelValidatorFluentBuilder UseObjectFactory(IObjectFactory objectFactory);
+        IModelValidatorFluentBuilder UseFactory(IObjectFactory objectFactory);
     }
 }

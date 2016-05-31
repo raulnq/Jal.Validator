@@ -1,4 +1,6 @@
-namespace Jal.Validator.Interface.Fluent
+using Jal.Validator.Interface;
+
+namespace Jal.Validator.Fluent.Interface
 {
     public interface IModelValidatorEndFluentBuilder
     {

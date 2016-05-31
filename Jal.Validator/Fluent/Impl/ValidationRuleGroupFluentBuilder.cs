@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Jal.Factory.Model;
+using Jal.Validator.Fluent.Interface;
 using Jal.Validator.Interface;
-using Jal.Validator.Interface.Fluent;
 
-namespace Jal.Validator.Fluent
+namespace Jal.Validator.Fluent.Impl
 {
     public class ValidationRuleGroupFluentBuilder<TTarget> : IValidationRuleGroupFluentBuilder<TTarget>
     {

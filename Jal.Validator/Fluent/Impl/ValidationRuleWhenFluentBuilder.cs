@@ -1,8 +1,8 @@
 ﻿using System;
 using Jal.Factory.Model;
-using Jal.Validator.Interface.Fluent;
+using Jal.Validator.Fluent.Interface;
 
-namespace Jal.Validator.Fluent
+namespace Jal.Validator.Fluent.Impl
 {
     public class ValidationRuleWhenFluentBuilder<TTarget> : IValidationRuleWhenFluentBuilder<TTarget>
     {

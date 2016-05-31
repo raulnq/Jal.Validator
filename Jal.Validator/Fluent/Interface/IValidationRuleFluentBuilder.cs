@@ -1,6 +1,6 @@
-using Jal.Validator.Fluent;
+using Jal.Validator.Interface;
 
-namespace Jal.Validator.Interface.Fluent
+namespace Jal.Validator.Fluent.Interface
 {
     public interface IValidationRuleFluentBuilder<out TTarget>
     {

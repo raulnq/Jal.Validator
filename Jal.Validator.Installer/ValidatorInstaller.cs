@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
@@ -12,20 +11,20 @@ namespace Jal.Validator.Installer
 {
     public class ValidatorInstaller : IWindsorInstaller
     {
-        private readonly Func<Assembly[]> _validatorProvider;
+        private readonly Assembly[] _validatorSourceAssemblies;
 
-        private readonly Func<Assembly[]> _validatorSourceProvider;
+        private readonly Assembly[] _validationConfigurationSourceAssemblies;
 
-        public ValidatorInstaller(Func<Assembly[]> validatorProvider, Func<Assembly[]> validatorSourceProvider)
+        public ValidatorInstaller(Assembly[] validatorSourceAssemblies, Assembly[] validationConfigurationSourceAssemblies)
         {
-            _validatorProvider = validatorProvider;
+            _validatorSourceAssemblies = validatorSourceAssemblies;
 
-            _validatorSourceProvider = validatorSourceProvider;
+            _validationConfigurationSourceAssemblies = validationConfigurationSourceAssemblies;
         }
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            var assemblies = _validatorProvider();
+            var assemblies = _validatorSourceAssemblies;
            
             if (assemblies != null)
             {
@@ -59,7 +58,7 @@ namespace Jal.Validator.Installer
                 container.Register(Component.For(typeof(IValidatorFactory)).ImplementedBy(typeof(ValidatorFactory)).LifestyleSingleton());
             }
 
-            var assembliessource = _validatorSourceProvider();
+            var assembliessource = _validationConfigurationSourceAssemblies;
             if (assembliessource != null)
             {
                 foreach (var assembly in assembliessource)

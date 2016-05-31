@@ -1,7 +1,7 @@
 ﻿using System;
-using Jal.Validator.Fluent;
+using Jal.Validator.Fluent.Impl;
+using Jal.Validator.Fluent.Interface;
 using Jal.Validator.Interface;
-using Jal.Validator.Interface.Fluent;
 using Jal.Validator.Model;
 
 namespace Jal.Validator.Impl

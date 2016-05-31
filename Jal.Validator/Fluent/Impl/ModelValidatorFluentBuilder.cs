@@ -1,10 +1,10 @@
 ﻿using System;
 using Jal.Factory.Interface;
+using Jal.Validator.Fluent.Interface;
 using Jal.Validator.Impl;
 using Jal.Validator.Interface;
-using Jal.Validator.Interface.Fluent;
 
-namespace Jal.Validator.Fluent
+namespace Jal.Validator.Fluent.Impl
 {
     public class ModelValidatorFluentBuilder : IModelValidatorFluentBuilder, IModelValidatorStartFluentBuilder
     {
@@ -14,7 +14,7 @@ namespace Jal.Validator.Fluent
 
         private IModelValidatorInterceptor _modelValidatorInterceptor;
 
-        public IModelValidatorFluentBuilder UseObjectFactory(IObjectFactory objectFactory)
+        public IModelValidatorFluentBuilder UseFactory(IObjectFactory objectFactory)
         {
             if (objectFactory == null)
             {
@@ -75,6 +75,10 @@ namespace Jal.Validator.Fluent
 
         public IModelValidatorFluentBuilder UseInterceptor(IModelValidatorInterceptor modelValidatorInterceptor)
         {
+            if (modelValidatorInterceptor == null)
+            {
+                throw new ArgumentNullException("modelValidatorInterceptor");
+            }
             _modelValidatorInterceptor = modelValidatorInterceptor;
             return this;
         }

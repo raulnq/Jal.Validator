@@ -4,6 +4,7 @@ using Jal.Factory.Fluent;
 using Jal.Factory.Interface;
 using Jal.Factory.Model;
 using Jal.Validator.Fluent;
+using Jal.Validator.Fluent.Impl;
 using Jal.Validator.Model;
 
 namespace Jal.Validator.Impl
