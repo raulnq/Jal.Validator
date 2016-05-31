@@ -22,12 +22,12 @@ namespace Jal.Validator.Tests.Integration
         [SetUp]
         public void SetUp()
         {
-            AssemblyFinder.Impl.AssemblyFinder.Current = new AssemblyFinder.Impl.AssemblyFinder(TestContext.CurrentContext.TestDirectory);
+            AssemblyFinder.Impl.AssemblyFinder.Current = AssemblyFinder.Impl.AssemblyFinder.Builder.UsePath(TestContext.CurrentContext.TestDirectory).Create;
             IWindsorContainer container = new WindsorContainer();
             container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel));
-            container.Install(new ValidatorInstaller());
+            container.Install(new ValidatorInstaller(() => AssemblyFinder.Impl.AssemblyFinder.Current.GetAssemblies("Validator"), () => AssemblyFinder.Impl.AssemblyFinder.Current.GetAssemblies("ValidatorSource")));
             container.Install(new ServiceLocatorInstaller());
-            container.Install(new FactoryInstaller());
+            container.Install(new FactoryInstaller(() => AssemblyFinder.Impl.AssemblyFinder.Current.GetAssemblies("FactorySource")));
             _modelValidator = container.Resolve<IModelValidator>();
         }
 

@@ -1,7 +1,5 @@
 ﻿using System;
-using Jal.Factory.Impl;
 using Jal.Factory.Interface;
-using Jal.Locator.Interface;
 using Jal.Validator.Impl;
 using Jal.Validator.Interface;
 using Jal.Validator.Interface.Fluent;
