@@ -7,12 +7,20 @@ namespace Jal.Validator.Tests.Impl
     {
         public ValidationConfigurationSource()
         {
+ 
+        }
+    }
+
+    public class AutoValidationConfigurationSource : AbstractValidationConfigurationSource
+    {
+        public AutoValidationConfigurationSource()
+        {
             Validate<Customer>().With<CustomerValidator>();
             Validate<Customer>("Group", x =>
-                                       {
-                                           x.With<CustomerValidator>();
-                                           x.With<CustomerValidator>();
-                                       });
+            {
+                x.With<CustomerValidator>();
+                x.With<CustomerValidator>();
+            });
         }
     }
 }

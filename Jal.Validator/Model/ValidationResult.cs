@@ -9,12 +9,14 @@ namespace Jal.Validator.Model
         public ValidationResult()
         {
             Errors = new List<ValidationFailure>();
+
             Warnings = new List<ValidationWarning>();
         }
 
         public ValidationResult(IList<ValidationFailure> failures)
         {
             Errors = failures;
+
             Warnings = new List<ValidationWarning>();
         }
 
@@ -26,10 +28,7 @@ namespace Jal.Validator.Model
             set;
         }
 
-        public bool IsValid 
-        {
-            get { return Errors == null || Errors.Count == 0; }  
-        }
+        public bool IsValid => Errors == null || Errors.Count == 0;
 
         public List<string> ToList()
         {

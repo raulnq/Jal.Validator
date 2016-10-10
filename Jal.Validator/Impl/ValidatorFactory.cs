@@ -26,14 +26,7 @@ namespace Jal.Validator.Impl
                 validators = ObjectFactory.Create<T, IValidator<T>>(instance, validationgroup);
             }
 
-            if (validators != null)
-            {
-                return validators;
-            }
-            else
-            {
-                throw new ArgumentNullException(string.Format("It's not posible to get a validator instance of the validation group {0}", validationgroup));
-            }
+            return validators;
         }
     }
 }

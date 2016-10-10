@@ -22,12 +22,18 @@ namespace Jal.Validator.Tests.Integration
         [SetUp]
         public void SetUp()
         {
-            AssemblyFinder.Impl.AssemblyFinder.Current = AssemblyFinder.Impl.AssemblyFinder.Builder.UsePath(TestContext.CurrentContext.TestDirectory).Create;
+            var finder = AssemblyFinder.Impl.AssemblyFinder.Builder.UsePath(TestContext.CurrentContext.TestDirectory).Create;
+
             IWindsorContainer container = new WindsorContainer();
+
             container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel));
-            container.Install(new ValidatorInstaller(AssemblyFinder.Impl.AssemblyFinder.Current.GetAssemblies("Validator"), AssemblyFinder.Impl.AssemblyFinder.Current.GetAssemblies("ValidatorSource")));
+
+            container.Install(new ValidatorInstaller(finder.GetAssemblies("Validator"), finder.GetAssemblies("ValidatorSource")));
+
             container.Install(new ServiceLocatorInstaller());
-            container.Install(new FactoryInstaller(AssemblyFinder.Impl.AssemblyFinder.Current.GetAssemblies("FactorySource")));
+
+            container.Install(new FactoryInstaller(finder.GetAssemblies("FactorySource")));
+
             _modelValidator = container.Resolve<IModelValidator>();
         }
 
@@ -88,7 +94,7 @@ namespace Jal.Validator.Tests.Integration
 
             locator.Register(typeof(IValidator<Customer>), new CustomerValidator(), typeof(CustomerValidator).FullName);
 
-            var factory = ObjectFactory.Builder.UseCreator(locator).UseConfigurationProvider(new IObjectFactoryConfigurationSource[]{new ValidationConfigurationSource()}).Create;
+            var factory = ObjectFactory.Builder.UseLocator(locator).UseConfigurationSource(new IObjectFactoryConfigurationSource[]{new ValidationConfigurationSource()}).Create;
 
             var validator = ModelValidator.Builder.UseFactory(factory).Create;
 

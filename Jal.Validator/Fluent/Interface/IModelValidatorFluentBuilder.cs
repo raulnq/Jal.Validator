@@ -4,6 +4,6 @@ namespace Jal.Validator.Fluent.Interface
 {
     public interface IModelValidatorFluentBuilder : IModelValidatorEndFluentBuilder
     {
-        IModelValidatorFluentBuilder UseInterceptor(IModelValidatorInterceptor modelValidatorInterceptor);
+        IModelValidatorEndFluentBuilder UseInterceptor(IModelValidatorInterceptor modelValidatorInterceptor);
     }
 }

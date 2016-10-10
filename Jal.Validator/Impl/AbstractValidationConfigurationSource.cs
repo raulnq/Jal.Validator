@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Jal.Factory.Fluent;
 using Jal.Factory.Interface;
 using Jal.Factory.Model;
-using Jal.Validator.Fluent;
 using Jal.Validator.Fluent.Impl;
-using Jal.Validator.Model;
 
 namespace Jal.Validator.Impl
 {
@@ -40,7 +37,7 @@ namespace Jal.Validator.Impl
         {
             var descriptor = new ValidationRuleGroupFluentBuilder<TTarget>(_objectFactoryConfigurationItems, name);
 
-            action(descriptor);
+            action?.Invoke(descriptor);
         }
     }     
 }

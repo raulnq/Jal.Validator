@@ -8,78 +8,43 @@ namespace Jal.Validator.Fluent.Impl
 {
     public class ModelValidatorFluentBuilder : IModelValidatorFluentBuilder, IModelValidatorStartFluentBuilder
     {
-        private IValidatorFactory _validatorFactory;
+        public IValidatorFactory ValidatorFactory;
 
-        private IModelValidator _modelValidator;
-
-        private IModelValidatorInterceptor _modelValidatorInterceptor;
+        public IModelValidatorInterceptor ModelValidatorInterceptor;
 
         public IModelValidatorFluentBuilder UseFactory(IObjectFactory objectFactory)
         {
             if (objectFactory == null)
             {
-                throw new ArgumentNullException("objectFactory");
+                throw new ArgumentNullException(nameof(objectFactory));
             }
-            _validatorFactory = new ValidatorFactory(objectFactory);
-            return this;
-        }
-
-        public IModelValidatorFluentBuilder UseFactory(IValidatorFactory validatorFactory)
-        {
-            if (validatorFactory == null)
-            {
-                throw new ArgumentNullException("validatorFactory");
-            }
-
-            _validatorFactory = validatorFactory;
+            ValidatorFactory = new ValidatorFactory(objectFactory);
 
             return this;
         }
-
-        public IModelValidatorEndFluentBuilder UseModelValidator(IModelValidator modelValidator)
-        {
-            if (modelValidator == null)
-            {
-                throw new ArgumentNullException("modelValidator");
-            }
-            _modelValidator = modelValidator;
-            return this;
-        }
-
         public IModelValidator Create
         {
             get
             {
-                if (_modelValidator != null)
+
+                var result = new ModelValidator(ValidatorFactory);
+
+                if (ModelValidatorInterceptor != null)
                 {
-                    return _modelValidator;
+                    result.Interceptor = ModelValidatorInterceptor;
                 }
-                else
-                {
-
-                    var result = new ModelValidator(_validatorFactory);
-
-                    IModelValidatorInterceptor modelValidatorInterceptor = new NullModelValidatorInterceptor();
-
-                    if (_modelValidatorInterceptor != null)
-                    {
-                        modelValidatorInterceptor = _modelValidatorInterceptor;
-                    }
-
-                    result.Interceptor = modelValidatorInterceptor;
-
-                    return result;
-                }
+                return result;
             }
         }
 
-        public IModelValidatorFluentBuilder UseInterceptor(IModelValidatorInterceptor modelValidatorInterceptor)
+        public IModelValidatorEndFluentBuilder UseInterceptor(IModelValidatorInterceptor modelValidatorInterceptor)
         {
             if (modelValidatorInterceptor == null)
             {
-                throw new ArgumentNullException("modelValidatorInterceptor");
+                throw new ArgumentNullException(nameof(modelValidatorInterceptor));
             }
-            _modelValidatorInterceptor = modelValidatorInterceptor;
+            ModelValidatorInterceptor = modelValidatorInterceptor;
+
             return this;
         }
     }

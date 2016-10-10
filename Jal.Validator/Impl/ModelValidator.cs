@@ -17,13 +17,7 @@ namespace Jal.Validator.Impl
 
         public static IModelValidator Current;
 
-        public static IModelValidatorStartFluentBuilder Builder
-        {
-            get
-            {
-                return new ModelValidatorFluentBuilder();
-            }
-        }
+        public static IModelValidatorStartFluentBuilder Builder => new ModelValidatorFluentBuilder();
 
         public IModelValidatorInterceptor Interceptor { get; set; }
 
@@ -34,22 +28,27 @@ namespace Jal.Validator.Impl
             {
                 var validators = creation();
 
-                foreach (var validator in validators)
+                if (validators != null)
                 {
-                    var result = validation(validator);
-
-                    if (!result.IsValid)
+                    foreach (var validator in validators)
                     {
-                        Interceptor.OnSuccess(instance, result);
-                        return result;
+                        var result = validation(validator);
+
+                        if (!result.IsValid)
+                        {
+                            Interceptor.OnSuccess(instance, result);
+
+                            return result;
+                        }
                     }
-                } 
-               
+                }
+
                 return new ValidationResult();
             }
             catch (Exception ex)
             {
                 Interceptor.OnError(instance, ex);
+
                 throw;
             }
             finally

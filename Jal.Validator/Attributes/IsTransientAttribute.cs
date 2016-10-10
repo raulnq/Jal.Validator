@@ -2,7 +2,7 @@
 
 namespace Jal.Validator.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class IsTransientAttribute : Attribute
     {
 

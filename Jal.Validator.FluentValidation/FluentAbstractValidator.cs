@@ -29,14 +29,16 @@ namespace Jal.Validator.FluentValidation
         ValidationResult ValidateInstance(TTarget instance, string ruleSet)
         {
             var concreteValidator = this;
+
             var results = string.IsNullOrEmpty(ruleSet) ? concreteValidator.Validate(instance) : concreteValidator.Validate(instance, ruleSet: ruleSet);
+
             var messages = new List<ValidationFailure>();
+
             foreach (var error in results.Errors)
             {
-                var splitMessage = error.ErrorMessage.Split(ValidationSettings.TokenMessageSeparator);
-                if (splitMessage.Length > 1)
+                if (!string.IsNullOrWhiteSpace(error.ErrorCode))
                 {
-                    messages.Add(new ValidationFailure(error.PropertyName, splitMessage[1], splitMessage[0]));
+                    messages.Add(new ValidationFailure(error.PropertyName, error.ErrorMessage, error.ErrorCode));
                 }
                 else
                 {
