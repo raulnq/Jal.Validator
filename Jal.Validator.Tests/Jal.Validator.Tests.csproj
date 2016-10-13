@@ -45,9 +45,6 @@
       <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Jal.AssemblyFinder">
-      <HintPath>..\packages\Jal.AssemblyFinder.1.1.1.0\lib\net40\Jal.AssemblyFinder.dll</HintPath>
-    </Reference>
     <Reference Include="Jal.Factory, Version=1.0.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jal.Factory.1.0.14\lib\net40\Jal.Factory.dll</HintPath>
       <Private>True</Private>
@@ -56,12 +53,28 @@
       <HintPath>..\packages\Jal.Factory.Installer.1.0.11\lib\net40\Jal.Factory.Installer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Jal.Factory.LightInject.Installer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jal.Factory.LightInject.Installer.1.0.0\lib\net45\Jal.Factory.LightInject.Installer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Jal.Finder, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jal.Finder.1.0.2\lib\net40\Jal.Finder.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Jal.Locator, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Jal.Locator.1.0.6.0\lib\net40\Jal.Locator.dll</HintPath>
     </Reference>
     <Reference Include="Jal.Locator.CastleWindsor, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Jal.Locator.CastleWindsor.1.0.4.0\lib\net40\Jal.Locator.CastleWindsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Jal.Locator.LightInject, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jal.Locator.LightInject.1.0.2\lib\net45\Jal.Locator.LightInject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LightInject, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.4.1.0\lib\net45\LightInject.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Moq">
@@ -84,9 +97,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Default\Tests.cs" />
     <Compile Include="Impl\CustomerValidator.cs" />
     <Compile Include="Impl\ValidationConfigurationSource.cs" />
     <Compile Include="CastleWindsor\Tests.cs" />
+    <Compile Include="Lightinject\Tests.cs" />
     <Compile Include="ModelValidatorTests.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +114,10 @@
     <ProjectReference Include="..\Jal.Validator.Installer\Jal.Validator.Installer.csproj">
       <Project>{9C5F53E5-A886-42FD-83D4-5C780786E6C4}</Project>
       <Name>Jal.Validator.Installer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jal.Validator.LightInject.Installer\Jal.Validator.LightInject.Installer.csproj">
+      <Project>{3A7D1952-D8CA-480D-87B3-BD29808B571C}</Project>
+      <Name>Jal.Validator.LightInject.Installer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Jal.Validator\Jal.Validator.csproj">
       <Project>{01C0DBA5-6A4B-49C0-B7BC-75C12B84F191}</Project>

@@ -1,20 +1,14 @@
-﻿using Castle.MicroKernel.Resolvers.SpecializedResolvers;
-using Castle.Windsor;
-using Jal.Factory.Impl;
-using Jal.Factory.Installer;
-using Jal.Factory.Interface;
+﻿using Jal.Factory.LightInject.Installer;
 using Jal.Finder.Atrribute;
 using Jal.Finder.Impl;
-using Jal.Locator.CastleWindsor.Installer;
-using Jal.Locator.Impl;
-using Jal.Validator.Impl;
-using Jal.Validator.Installer;
+using Jal.Locator.LightInject.Installer;
 using Jal.Validator.Interface;
-using Jal.Validator.Tests.Impl;
+using Jal.Validator.LightInject.Installer;
 using Jal.Validator.Tests.Model;
+using LightInject;
 using NUnit.Framework;
 
-namespace Jal.Validator.Tests.CastleWindsor
+namespace Jal.Validator.Tests.Lightinject
 {
     [TestFixture]
     public class Tests
@@ -24,23 +18,22 @@ namespace Jal.Validator.Tests.CastleWindsor
         [SetUp]
         public void SetUp()
         {
+
+            var container = new ServiceContainer();
+
             var directory = TestContext.CurrentContext.TestDirectory;
 
             var finder = AssemblyFinder.Builder.UsePath(directory).Create;
 
             var assemblies = finder.GetAssembliesTagged<AssemblyTagAttribute>();
 
-            IWindsorContainer container = new WindsorContainer();
+            container.RegisterFrom<ServiceLocatorCompositionRoot>();
 
-            container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel));
+            container.RegisterFactory(assemblies);
 
-            container.Install(new ValidatorInstaller(assemblies, assemblies));
+            container.RegisterValidator(assemblies, assemblies);
 
-            container.Install(new ServiceLocatorInstaller());
-
-            container.Install(new FactoryInstaller(assemblies));
-
-            _modelValidator = container.Resolve<IModelValidator>();
+            _modelValidator = container.GetInstance<IModelValidator>();
         }
 
         [Test]
