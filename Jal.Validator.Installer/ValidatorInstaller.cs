@@ -3,6 +3,7 @@ using System.Reflection;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Jal.Factory.Interface;
 using Jal.Validator.Attributes;
 using Jal.Validator.Impl;
 using Jal.Validator.Interface;
@@ -11,20 +12,27 @@ namespace Jal.Validator.Installer
 {
     public class ValidatorInstaller : IWindsorInstaller
     {
-        private readonly Assembly[] _validatorSourceAssemblies;
+        private readonly Assembly[] _sourceassemblies;
 
-        private readonly Assembly[] _validationConfigurationSourceAssemblies;
+        private readonly Assembly[] _configurationsourceassemblies;
 
-        public ValidatorInstaller(Assembly[] validatorSourceAssemblies, Assembly[] validationConfigurationSourceAssemblies)
+        private readonly AbstractValidationConfigurationSource[] _sources;
+
+        public ValidatorInstaller(Assembly[] sourceassemblies, Assembly[] configurationsourceassemblies)
         {
-            _validatorSourceAssemblies = validatorSourceAssemblies;
+            _sourceassemblies = sourceassemblies;
 
-            _validationConfigurationSourceAssemblies = validationConfigurationSourceAssemblies;
+            _configurationsourceassemblies = configurationsourceassemblies;
+        }
+
+        public ValidatorInstaller(AbstractValidationConfigurationSource[] sources)
+        {
+            _sources = sources;
         }
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            var assemblies = _validatorSourceAssemblies;
+            var assemblies = _sourceassemblies;
            
             if (assemblies != null)
             {
@@ -54,17 +62,27 @@ namespace Jal.Validator.Installer
                         }
                     }
                 }
-                container.Register(Component.For(typeof(IModelValidator)).ImplementedBy(typeof(ModelValidator)).LifestyleSingleton());
-                container.Register(Component.For(typeof(IValidatorFactory)).ImplementedBy(typeof(ValidatorFactory)).LifestyleSingleton());
             }
 
-            var assembliessource = _validationConfigurationSourceAssemblies;
+            container.Register(Component.For(typeof(IModelValidator)).ImplementedBy(typeof(ModelValidator)).LifestyleSingleton());
+
+            container.Register(Component.For(typeof(IValidatorFactory)).ImplementedBy(typeof(ValidatorFactory)).LifestyleSingleton());
+
+            var assembliessource = _configurationsourceassemblies;
             if (assembliessource != null)
             {
                 foreach (var assembly in assembliessource)
                 {
                     var assemblyDescriptor = Classes.FromAssembly(assembly);
                     container.Register(assemblyDescriptor.BasedOn<AbstractValidationConfigurationSource>().WithServiceAllInterfaces());
+                }
+            }
+
+            if (_sources != null)
+            {
+                foreach (var source in _sources)
+                {
+                    container.Register(Component.For(typeof(IObjectFactoryConfigurationSource)).ImplementedBy(source.GetType()).Named(source.GetType().FullName).LifestyleSingleton());
                 }
             }
         }

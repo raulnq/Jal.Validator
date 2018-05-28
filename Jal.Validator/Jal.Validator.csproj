@@ -1,92 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{01C0DBA5-6A4B-49C0-B7BC-75C12B84F191}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jal.Validator</RootNamespace>
-    <AssemblyName>Jal.Validator</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <Authors>Raul Naupari</Authors>
+    <Version>1.4.0</Version>
+    <Company>Raul Naupari</Company>
+    <Description>Just another library to validate classes</Description>
+    <Copyright />
+    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/raulnq/Jal.Validator</PackageProjectUrl>
+    <RepositoryUrl></RepositoryUrl>
+    <PackageTags />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Jal.Factory, Version=1.0.14.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jal.Factory.1.0.14\lib\net40\Jal.Factory.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Jal.Locator, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Jal.Locator.1.0.6.0\lib\net40\Jal.Locator.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Jal.Factory" Version="1.1.1" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.1" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Attributes\IsTransientAttribute.cs" />
-    <Compile Include="Extension\StringExtension.cs" />
-    <Compile Include="Extension\ValidatorExtension.cs" />
-    <Compile Include="Fluent\Interface\IValidationRuleFluentBuilder.cs" />
-    <Compile Include="Fluent\Interface\IValidationRuleGroupFluentBuilder.cs" />
-    <Compile Include="Fluent\Interface\IValidationRuleWhenFluentBuilder.cs" />
-    <Compile Include="Impl\AbstractModelValidatorInterceptor.cs" />
-    <Compile Include="Impl\NullModelValidatorInterceptor.cs" />
-    <Compile Include="Impl\ValidatorFactory.cs" />
-    <Compile Include="Fluent\Interface\IModelValidatorEndFluentBuilder.cs" />
-    <Compile Include="Fluent\Interface\IModelValidatorStartFluentBuilder.cs" />
-    <Compile Include="Fluent\Interface\IModelValidatorFluentBuilder.cs" />
-    <Compile Include="Impl\AbstractValidationConfigurationSource.cs" />
-    <Compile Include="Impl\AbstractValidator.cs" />
-    <Compile Include="Impl\ModelValidator.cs" />
-    <Compile Include="Fluent\Impl\ValidationRuleGroupFluentBuilder.cs" />
-    <Compile Include="Fluent\Impl\ModelValidatorFluentBuilder.cs" />
-    <Compile Include="Interface\IModelValidator.cs" />
-    <Compile Include="Interface\IModelValidatorInterceptor.cs" />
-    <Compile Include="Interface\IValidator.cs" />
-    <Compile Include="Interface\IValidatorFactory.cs" />
-    <Compile Include="Model\ValidationException.cs" />
-    <Compile Include="Model\ValidationFailure.cs" />
-    <Compile Include="Model\ValidationResult.cs" />
-    <Compile Include="Fluent\Impl\ValidationRuleFluentBuilder.cs" />
-    <Compile Include="Fluent\Impl\ValidationRuleWhenFluentBuilder.cs" />
-    <Compile Include="Model\ValidationSettings.cs" />
-    <Compile Include="Model\ValidationWarning.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Jal.Validator.nuspec" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  
 </Project>

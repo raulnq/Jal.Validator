@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
+using Jal.Factory.Interface;
 using Jal.Validator.Attributes;
 using Jal.Validator.Impl;
 using Jal.Validator.Interface;
@@ -63,6 +64,21 @@ namespace Jal.Validator.LightInject.Installer
                     }
                 }
             }
+        }
+
+        public static void RegisterValidator(this IServiceContainer container, AbstractValidationConfigurationSource[] sources)
+        {
+            container.Register<IModelValidator, ModelValidator>(new PerContainerLifetime());
+
+            container.Register<IValidatorFactory, ValidatorFactory>(new PerContainerLifetime());
+
+            if (sources != null)
+            {
+                foreach (var source in sources)
+                {
+                    container.Register(typeof(IObjectFactoryConfigurationSource), source.GetType(), source.GetType().FullName, new PerContainerLifetime());
+                }
+            }         
         }
     }
 }

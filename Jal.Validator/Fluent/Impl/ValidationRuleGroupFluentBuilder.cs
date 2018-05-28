@@ -20,7 +20,7 @@ namespace Jal.Validator.Fluent.Impl
 
         public IValidationRuleWhenFluentBuilder<TTarget> With<TValidator>() where TValidator : IValidator<TTarget>
         {
-            var value = new ObjectFactoryConfigurationItem(typeof(TTarget)) { ResultType = typeof(TValidator), GroupName = _groupName };
+            var value = new ObjectFactoryConfigurationItem(typeof(TTarget)) { ResultType = typeof(TValidator), Name = _groupName };
 
             _objectFactoryConfigurationItems.Add(value);
 

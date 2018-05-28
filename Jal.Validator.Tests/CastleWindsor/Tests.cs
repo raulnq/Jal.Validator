@@ -1,12 +1,11 @@
-﻿using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+﻿using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
-using Jal.Factory.Impl;
 using Jal.Factory.Installer;
 using Jal.Factory.Interface;
 using Jal.Finder.Atrribute;
 using Jal.Finder.Impl;
 using Jal.Locator.CastleWindsor.Installer;
-using Jal.Locator.Impl;
 using Jal.Validator.Impl;
 using Jal.Validator.Installer;
 using Jal.Validator.Interface;
@@ -19,14 +18,15 @@ namespace Jal.Validator.Tests.CastleWindsor
     [TestFixture]
     public class Tests
     {
-        private IModelValidator _modelValidator;
-
-        [SetUp]
-        public void SetUp()
+        [Test]
+        [TestCase("Name", 19)]
+        [TestCase("A", 10000)]
+        [TestCase("_", 999)]
+        public void Validate_WithoutRuleName_Valid(string name, int age)
         {
             var directory = TestContext.CurrentContext.TestDirectory;
 
-            var finder = AssemblyFinder.Builder.UsePath(directory).Create;
+            var finder = AssemblyFinder.Create(directory);
 
             var assemblies = finder.GetAssembliesTagged<AssemblyTagAttribute>();
 
@@ -40,21 +40,14 @@ namespace Jal.Validator.Tests.CastleWindsor
 
             container.Install(new FactoryInstaller(assemblies));
 
-            _modelValidator = container.Resolve<IModelValidator>();
-        }
+            var modelValidator = container.Resolve<IModelValidator>();
 
-        [Test]
-        [TestCase("Name", 19)]
-        [TestCase("A", 10000)]
-        [TestCase("_", 999)]
-        public void Validate_WithoutRuleName_Valid(string name, int age)
-        {
             var customer = new Customer
             {
                 Name = name,
                 Age = age
             };
-            var validationResult = _modelValidator.Validate(customer);
+            var validationResult = modelValidator.Validate(customer);
             Assert.AreEqual(true, validationResult.IsValid);
         }
 
@@ -65,12 +58,30 @@ namespace Jal.Validator.Tests.CastleWindsor
         [TestCase("  ", 0)]
         public void Validate_WithoutRuleName_IsNotValid(string name, int age)
         {
+            var directory = TestContext.CurrentContext.TestDirectory;
+
+            var finder = AssemblyFinder.Create(directory);
+
+            var assemblies = finder.GetAssembliesTagged<AssemblyTagAttribute>();
+
+            IWindsorContainer container = new WindsorContainer();
+
+            container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel));
+
+            container.Install(new ValidatorInstaller(assemblies, assemblies));
+
+            container.Install(new ServiceLocatorInstaller());
+
+            container.Install(new FactoryInstaller(assemblies));
+
+            var modelValidator = container.Resolve<IModelValidator>();
+
             var customer = new Customer
             {
                 Name = name,
                 Age = age
             };
-            var validationResult = _modelValidator.Validate(customer);
+            var validationResult = modelValidator.Validate(customer);
             Assert.AreEqual(false, validationResult.IsValid);
             Assert.AreEqual(2, validationResult.Errors.Count);
         }
@@ -81,12 +92,27 @@ namespace Jal.Validator.Tests.CastleWindsor
         [TestCase("_", 999)]
         public void Validate_WithRuleName_IsValid(string name, int age)
         {
+            IWindsorContainer container = new WindsorContainer();
+
+            container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel));
+
+            container.Install(new ValidatorInstaller(new AbstractValidationConfigurationSource[]{new AutoValidationConfigurationSource()}));
+
+            container.Install(new ServiceLocatorInstaller());
+
+            container.Install(new FactoryInstaller(new IObjectFactoryConfigurationSource[]{}));
+
+            container.Register(Component.For(typeof(IValidator<Customer>)).ImplementedBy(typeof(CustomerValidator)).Named(typeof(CustomerValidator).FullName).LifestyleSingleton());
+
+            var modelValidator = container.Resolve<IModelValidator>();
+
             var customer = new Customer
             {
                 Name = name,
                 Age = age
             };
-            var validationResult = _modelValidator.Validate(customer, "Group");
+            var validationResult = modelValidator.Validate(customer, "Group");
+
             Assert.AreEqual(true, validationResult.IsValid);
         }
     }

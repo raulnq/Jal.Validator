@@ -1,22 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jal.Validator", "Jal.Validator\Jal.Validator.csproj", "{01C0DBA5-6A4B-49C0-B7BC-75C12B84F191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jal.Validator", "Jal.Validator\Jal.Validator.csproj", "{01C0DBA5-6A4B-49C0-B7BC-75C12B84F191}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jal.Validator.Installer", "Jal.Validator.Installer\Jal.Validator.Installer.csproj", "{9C5F53E5-A886-42FD-83D4-5C780786E6C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jal.Validator.Installer", "Jal.Validator.Installer\Jal.Validator.Installer.csproj", "{9C5F53E5-A886-42FD-83D4-5C780786E6C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jal.Validator.FluentValidation", "Jal.Validator.FluentValidation\Jal.Validator.FluentValidation.csproj", "{8B319C62-A01D-47FE-A5B7-098E145564DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jal.Validator.FluentValidation", "Jal.Validator.FluentValidation\Jal.Validator.FluentValidation.csproj", "{8B319C62-A01D-47FE-A5B7-098E145564DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jal.Validator.Tests", "Jal.Validator.Tests\Jal.Validator.Tests.csproj", "{B4BA67C0-C664-4F4A-B3B3-38D837B46163}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{ACAFB934-7B50-49DC-8BF7-87100CB28387}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jal.Validator.LightInject.Installer", "Jal.Validator.LightInject.Installer\Jal.Validator.LightInject.Installer.csproj", "{3A7D1952-D8CA-480D-87B3-BD29808B571C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jal.Validator.LightInject.Installer", "Jal.Validator.LightInject.Installer\Jal.Validator.LightInject.Installer.csproj", "{3A7D1952-D8CA-480D-87B3-BD29808B571C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0B35A313-816F-49FC-AC7B-AD8D219EA52A}"
 	ProjectSection(SolutionItems) = preProject
@@ -52,5 +47,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A2CAAEA-DD23-443B-9F03-6A9C8D81FB74}
 	EndGlobalSection
 EndGlobal

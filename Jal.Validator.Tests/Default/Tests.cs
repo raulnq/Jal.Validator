@@ -1,5 +1,4 @@
-﻿using Jal.Factory.Impl;
-using Jal.Factory.Interface;
+﻿using Jal.Factory.Interface;
 using Jal.Locator.Impl;
 using Jal.Validator.Impl;
 using Jal.Validator.Interface;
@@ -17,13 +16,11 @@ namespace Jal.Validator.Tests.Default
         [SetUp]
         public void SetUp()
         {
-            var locator = ServiceLocator.Builder.Create as ServiceLocator;
+            var locator = new ServiceLocator();
 
             locator.Register(typeof(IValidator<Customer>), new CustomerValidator(), typeof(CustomerValidator).FullName);
 
-            var factory = ObjectFactory.Builder.UseLocator(locator).UseConfigurationSource(new IObjectFactoryConfigurationSource[] { new AutoValidationConfigurationSource() }).Create;
-
-            _modelValidator = ModelValidator.Builder.UseFactory(factory).Create;
+            _modelValidator = ModelValidator.Create(new IObjectFactoryConfigurationSource[] { new AutoValidationConfigurationSource() }, locator);
         }
 
         [Test]

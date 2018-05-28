@@ -3,13 +3,11 @@ Just another library to validate classes
 
 ## How to use?
 
-### Default implementation
-
-I only suggest to use this implementation on simple apps.
+### Default service locator
 
 Create an instance of the locator
 
-    var locator = ServiceLocator.Builder.Create as ServiceLocator;
+    var locator = new ServiceLocator();
 
 Create your validator class
 
@@ -49,9 +47,7 @@ Register your validator
     
 Create a instance of the IModelValidator interface
 
-    var factory = ObjectFactory.Builder.UseLocator(locator).UseConfigurationSource(new IObjectFactoryConfigurationSource[]{new ValidationConfigurationSource()}).Create;
-    
-    var validator = ModelValidator.Builder.UseFactory(factory).Create;
+    ModelValidator.Create(new IObjectFactoryConfigurationSource[] { new AutoValidationConfigurationSource() }, locator)
     
 Use the Validator class
 
@@ -62,19 +58,11 @@ Use the Validator class
 	};
 	var validationResult = validator.Validate(customer, "Group");
 
-### Castle Windsor Integration
+### Castle Windsor as service locator
 
-Note: The Jal.Locator.CastleWindsor, Jal.Factory and Jal.Finder library are needed
+Note: The [Jal.Locator.CastleWindsor](https://www.nuget.org/packages/Jal.Locator.CastleWindsor/) library is needed.
 
-Setup the Jal.Finder library
-
-	var directory = AppDomain.CurrentDomain.BaseDirectory;
-
-	var finder = AssemblyFinder.Builder.UsePath(directory).Create;
-
-    var assemblies = finder.GetAssembliesTagged<AssemblyTagAttribute>();
-	
-Setup the Castle Windsor container
+Setup the IoC container
 
 	var container = new WindsorContainer();
 
@@ -86,11 +74,11 @@ Install the Jal.Locator.CastleWindsor library
 
 Install the Jal.Factory library
 
-	container.Install(new FactoryInstaller(assemblies));
+	container.Install(new FactoryInstaller(new IObjectFactoryConfigurationSource[]{}));
 	
-Install the Jal.Validator library, use the ValidatorInstaller class included
+Install the Jal.Validator library
 
-	container.Install(new ValidatorInstaller(assemblies, assemblies));
+	container.Install(new ValidatorInstaller(new AbstractValidationConfigurationSource[]{new ValidationConfigurationSource()}));
 
 Create your validator class
 
@@ -123,15 +111,11 @@ Create a class to setup the Jal.Validator library
             Validate<Customer>().With<CustomerValidator>();
         }
     }
+
+Register your validator class in the IoC container
 	
-Tag the assembly container of the validator classes in order to be read by the library
+    container.Register(Component.For(typeof(IValidator<Customer>)).ImplementedBy(typeof(CustomerValidator)).Named(typeof(CustomerValidator).FullName).LifestyleSingleton());
 
-	[assembly: AssemblyTag]
-
-Tag the assembly container of the validator configuration source classes in order to be read by the library
-
-    [assembly: AssemblyTag]
-	
 Resolve a instance of the interface IModelValidator
 
 	var modelValidator = container.Resolve<IModelValidator>();
@@ -145,19 +129,11 @@ Use the Validator class
             };
     var validationResult = modelValidator.Validate(customer);
 
-### LightInject Integration
+### LightInject as service locator
 
-Note: The Jal.Locator.LightInject, Jal.Factory and Jal.Finder library are needed
+Note: The [Jal.Locator.LightInject](https://www.nuget.org/packages/Jal.Locator.LightInject/) library is needed. 
 
-Setup the Jal.Finder library
-
-	var directory = AppDomain.CurrentDomain.BaseDirectory;
-
-	var finder = AssemblyFinder.Builder.UsePath(directory).Create;
-
-    var assemblies = finder.GetAssembliesTagged<AssemblyTagAttribute>();
-	
-Setup the LightInject container
+Setup the IoC container
 
 	var container = new ServiceContainer();
 
@@ -167,11 +143,11 @@ Install the Jal.Locator.CastleWindsor library
 
 Install the Jal.Factory library
 
-	container.RegisterFactory(assemblies);
+	container.RegisterFactory(new IObjectFactoryConfigurationSource[] { });
 	
-Install the Jal.Validator library, use the ValidatorInstaller class included
+Install the Jal.Validator library
 
-	container.RegisterValidator(assemblies, assemblies);
+	container.RegisterValidator(new AbstractValidationConfigurationSource[] { new ValidationConfigurationSource() });
 
 Create your validator class
 
@@ -205,13 +181,9 @@ Create a class to setup the Jal.Validator library
         }
     }
 	
-Tag the assembly container of the validator classes in order to be read by the library
-
-	[assembly: AssemblyTag]
-
-Tag the assembly container of the validator configuration source classes in order to be read by the library
-
-    [assembly: AssemblyTag]
+Register your validator class in the IoC container
+	
+    container.Register<IValidator<Customer>, CustomerValidator>(typeof(CustomerValidator).FullName, new PerContainerLifetime());
 	
 Resolve a instance of the interface IModelValidator
 
@@ -224,6 +196,7 @@ Use the Validator class
                 Name = name,
                 Age = age
             };
+
     var validationResult = modelValidator.Validate(customer);
 	
 ## FluentValidation Integration

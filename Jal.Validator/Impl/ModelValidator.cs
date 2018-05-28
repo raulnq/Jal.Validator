@@ -1,6 +1,7 @@
 ﻿using System;
-using Jal.Validator.Fluent.Impl;
-using Jal.Validator.Fluent.Interface;
+using Jal.Factory.Impl;
+using Jal.Factory.Interface;
+using Jal.Locator.Interface;
 using Jal.Validator.Interface;
 using Jal.Validator.Model;
 
@@ -17,7 +18,10 @@ namespace Jal.Validator.Impl
 
         public static IModelValidator Current;
 
-        public static IModelValidatorStartFluentBuilder Builder => new ModelValidatorFluentBuilder();
+        public static IModelValidator Create(IObjectFactoryConfigurationSource[] sources, IServiceLocator locator)
+        {
+            return new ModelValidator(new ValidatorFactory(new ObjectFactory(new ObjectFactoryConfigurationProvider(sources), new ObjectCreator(locator)))); 
+        }
 
         public IModelValidatorInterceptor Interceptor { get; set; }
 
